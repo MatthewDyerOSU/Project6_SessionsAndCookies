@@ -19,7 +19,6 @@ $manufacturer_id = $manufacturer['id'];
 $manufacturer_name = $manufacturer['name'];
 
 $sql_motorcycles = "SELECT motorcycles.id AS id, model, year, engine_cc, engine_hp, category_id,  categories.name AS category_name FROM motorcycles, categories WHERE manufacturer_id = " . $manufacturer_id . " AND category_id = categories.id;";
-
 $motorcycles = $db->query($sql_motorcycles);
 $num_rows = mysqli_num_rows($motorcycles);
 ?>
