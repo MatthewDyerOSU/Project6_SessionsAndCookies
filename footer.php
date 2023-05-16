@@ -1,6 +1,6 @@
 </main>
   <footer>
-    <p>&copy; 2020 YOUR NAME</p>
+    <p>&copy; 2023 Matthew Dyer</p>
   </footer>
 </body>
 </html>

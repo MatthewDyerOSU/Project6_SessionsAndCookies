@@ -6,7 +6,11 @@ if (isset($_SESSION["wishList"])) {
   $wishListLength = 0;
 }
 
-$numberOfItemsInCart = 'TODO';
+if (isset($_SESSION["cart"])) {
+  $numberOfItemsInCart = count($_SESSION["cart"]);
+} else {
+  $numberOfItemsInCart = 0;
+}
 
 ?>
 <!DOCTYPE html>
