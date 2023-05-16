@@ -13,7 +13,12 @@ if ($db->connect_error) {
   die("Error: Could not connect to database. " . $db->connect_error);
 }
 
-$featured_motorcycle_id = rand(1, 5);
+$motorcycle_ids_sql = $db->query("SELECT id FROM motorcycles");
+$motorcycle_ids = [];
+while ($motorcycle = $motorcycle_ids_sql->fetch_assoc()) {
+ array_push($motorcycle_ids, $motorcycle['id']); 
+}
+$featured_motorcycle_id = $motorcycle_ids[rand(1, sizeof($motorcycle_ids) - 1)];
 $sql_featured_motorcycle = "SELECT motorcycles.id AS id, model, year, engine_cc, engine_hp,
   manufacturers.id AS manufacturer_id, manufacturers.name AS manufacturer_name,
   categories.id AS category_id, categories.name AS category_name
@@ -45,7 +50,7 @@ $motorcycles = $db->query($sql_motorcycles);
       <h2>Featured Bike</h2>
       <div id="motorcycle">
         <h3><a href="/motorcycles/show.php?motorcycle_id=<?= $featured_motorcycle_id ?>"><?= $featured_motorcycle_year ?> <?= $featured_motorcycle_manufacturer_name ?> <?= $featured_motorcycle_model ?></a></h3>
-        <a href="/motorcycles/show.php?motorcycle_id=<?= $featured_motorcycle_id ?>"><img src="/assets/images/motorcycle_<?= $featured_motorcycle_id ?>.jpg" alt="<?= $featured_motorcycle_year ?> <?= $featured_motorcycle_manufacturer_name ?> <?= $featured_motorcycle_model ?>"></a>
+        <a href="/motorcycles/show.php?motorcycle_id=<?= $featured_motorcycle_id ?>"><img src="/assets/images/motorcycle_<?= ($featured_motorcycle_id % 5) + 1 ?>.jpg" alt="<?= $featured_motorcycle_year ?> <?= $featured_motorcycle_manufacturer_name ?> <?= $featured_motorcycle_model ?>"></a>
         <h4>Manufacturer: <a href="/manufacturers/show.php?id=<?= $featured_motorcycle_manufacturer_id ?>"><?= $featured_motorcycle_manufacturer_name ?></a></h4>
         <h4>Category: <a href="/categories/show.php?id=<?= $featured_motorcycle_category_id ?>"><?= $featured_motorcycle_category_name ?></a></h4>
         <p><?= $featured_motorcycle_cc ?>cc, <?= $featured_motorcycle_hp ?>hp</p>
